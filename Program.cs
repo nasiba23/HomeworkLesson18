@@ -36,7 +36,7 @@ namespace HomeworkLesson18
             {
                 using (var conn = new SqlConnection(ConString))
                 {
-                    return conn.Query<Person>($"SELECT * FROM PEOPLE WHERE Id={id}").FirstOrDefault();
+                    return conn.Query<Person>("SELECT * FROM PEOPLE WHERE Id = @id").FirstOrDefault();
                 }
             }
 
@@ -50,12 +50,20 @@ namespace HomeworkLesson18
 
             public void Update(Person person)
             {
-                throw new NotImplementedException();
+                using (var conn = new SqlConnection(ConString))
+                {
+                    var sql = "UPDATE People SET LastName = @LastName, FirstName = @FirstName, MiddleName = @MiddleName, BirthDate = @BirthDate WHERE Id = @Id";
+                    conn.Execute(sql, person);
+                }
             }
 
             public void Delete(int id)
             {
-                throw new NotImplementedException();
+                using (var conn = new SqlConnection(ConString))
+                {
+                    var sql = $"DELETE FROM PEOPLE WHERE Id = @id";
+                    conn.Execute(sql, new { id });
+                }
             }
         }
     }
