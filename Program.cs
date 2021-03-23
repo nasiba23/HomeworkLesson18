@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Dapper;
 using Microsoft.Data.SqlClient;
 
@@ -20,15 +21,7 @@ namespace HomeworkLesson18
             public string MiddleName { get; set; }
             public DateTime BirthDate { get; set; }
         }
-        public interface IRepository
-        {
-            public void Create(Person person);
-            public Person Get(int id);
-            public List<Person> GetPeople();
-            public void Update(Person person);
-            public void Delete(int id);
-        }
-        public class PeopleRepository : IRepository
+        public class PeopleRepository
         {
             public void Create(Person person)
             {
@@ -41,7 +34,10 @@ namespace HomeworkLesson18
             }
             public Person Get(int id)
             {
-                throw new NotImplementedException();
+                using (var conn = new SqlConnection(ConString))
+                {
+                    return conn.Query<Person>($"SELECT * FROM PEOPLE WHERE Id={id}").FirstOrDefault();
+                }
             }
 
             public List<Person> GetPeople()
