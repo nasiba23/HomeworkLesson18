@@ -42,7 +42,10 @@ namespace HomeworkLesson18
 
             public List<Person> GetPeople()
             {
-                throw new NotImplementedException();
+                using (var conn = new SqlConnection(ConString))
+                {
+                    return conn.Query<Person>("SELECT * FROM PEOPLE").ToList();
+                }
             }
 
             public void Update(Person person)
