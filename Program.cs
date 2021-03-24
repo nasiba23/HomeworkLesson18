@@ -27,7 +27,7 @@ namespace HomeworkLesson18
             {
                 using (var conn = new SqlConnection(ConString))
                 {
-                    var sql = @"INSERT INTO PEOPLE (LastName, FirstName, MiddleName, BirtDate) 
+                    var sql = @"INSERT INTO PEOPLE (LastName, FirstName, MiddleName, BirthDate) 
                     VALUES (@LastName, @FirstName, @MiddleName, @BirthDate)";
                     conn.Execute(sql, person);
                 }
@@ -36,7 +36,7 @@ namespace HomeworkLesson18
             {
                 using (var conn = new SqlConnection(ConString))
                 {
-                    return conn.Query<Person>("SELECT * FROM PEOPLE WHERE Id = @id").FirstOrDefault();
+                    return conn.Query<Person>("SELECT * FROM PEOPLE WHERE Id = @id", id).FirstOrDefault();
                 }
             }
 
