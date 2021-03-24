@@ -36,7 +36,7 @@ namespace HomeworkLesson18
             {
                 using (var conn = new SqlConnection(ConString))
                 {
-                    return conn.Query<Person>("SELECT * FROM PEOPLE WHERE Id = @id", id).FirstOrDefault();
+                    return conn.Query<Person>("SELECT * FROM PEOPLE WHERE Id = @id", new { id }).FirstOrDefault();
                 }
             }
 
